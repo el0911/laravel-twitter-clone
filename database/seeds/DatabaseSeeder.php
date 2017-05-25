@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
      public function run()
    {
-       $this->call(TweetsTableSeeder::class);
+   		//no need for the tweet seeder. the tweets are generated from the UsersTableSeeder.
+   	   $this->call(UsersTableSeeder::class);
    }
 }

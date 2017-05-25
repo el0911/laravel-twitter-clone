@@ -13,19 +13,20 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\tweet;
+use App\User;
 
-$factory->define(App\Tweet::class, function (Faker\Generator $faker) {
+$factory->define(tweet::class, function (Faker\Generator $faker) {
     return [
         'body' => $faker->realText(140),
     ];
 });
 
-
-
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
+        'username' => str_random(15),
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),

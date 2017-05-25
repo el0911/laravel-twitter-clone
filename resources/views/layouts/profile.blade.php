@@ -93,7 +93,9 @@
        <li class="{{ !Route::currentRouteNamed('profile') ?: 'active' }}">
            <a href="{{ url('/' . $user->username) }}" class="text-center">
                <div class="text-uppercase">Tweets</div>
-               <div>0</div>
+               <div>
+                   {{ App\User::find(Auth::user()->id)->tweets()->count() }}
+               </div>
            </a>
        </li>
        @if ($is_edit_profile)
