@@ -29,6 +29,6 @@ class CreateTweetsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tweets');
     }
 }

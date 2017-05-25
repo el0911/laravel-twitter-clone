@@ -15,9 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -32,7 +29,6 @@ Route::get('/timeline', 'ShowTimeline@show');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::get('/{username}','profilecontroller@show');
 
 Route::group(['middleware' => 'auth'], function () {
@@ -40,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/follows', 'UserController@follows');
     Route::post('/unfollows', 'UserController@unfollows');
 });
+
 Route::get('/{username}', 'ProfileController@show')->name('profile');
 Route::get('/{username}/followers', 'ProfileController@followers')->name('followers');
 Route::get('/{username}/following', 'ProfileController@following')->name('following');
