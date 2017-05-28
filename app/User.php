@@ -38,14 +38,19 @@ class User extends Authenticatable
     return !is_null($this->following()->where('user_id', $user->id)->first());
   }
 
-  public function followers()
-  {
-    return $this->belongsToMany('App\User', 'followers', 'user_id', 'follower_user_id')->withTimestamps();
-  }
+  // public function followers()
+  // {
+  //   return $this->belongsToMany('App\User', 'followers', 'user_id', 'follower_user_id')->withTimestamps();
+  // }
 
   public function tweets()
   {
     return $this->hasMany('App\Tweet', 'user_id', 'id');
+  }
+
+  public function followers()
+  {
+    return $this->hasMany('App\Follower', 'user_id');
   }
 
   public function timeline()

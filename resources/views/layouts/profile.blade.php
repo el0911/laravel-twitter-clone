@@ -94,18 +94,16 @@
            <a href="{{ url('/' . $user->username) }}" class="text-center">
                <div class="text-uppercase">Tweets</div>
                <div>
-                   {{ App\User::find(Auth::user()->id)->tweets()->count() }}
+                   {{ $tweets_count }}
                </div>
            </a>
        </li>
-       @if ($is_edit_profile)
        <li class="{{ !Route::currentRouteNamed('following') ?: 'active' }}">
            <a href="{{ url('/' . $user->username . '/following') }}" class="text-center">
                <div class="text-uppercase">Following</div>
                <div>{{ $following_count }}</div>
            </a>
        </li>
-       @endif
        <li class="{{ !Route::currentRouteNamed('followers') ?: 'active' }}">
            <a href="{{ url('/' . $user->username . '/followers') }}" class="text-center">
                <div class="text-uppercase">Followers</div>

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use App\tweet;
+use App\Tweet;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,8 +13,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 5)->create()->each(function ($u) {
-        $u->tweets()->save(factory(tweet::class)->make());
-    	});
+      factory(App\User::class, 5)->create()->each(function ($u) {
+       $u->tweets()->save(factory(App\Tweet::class)->make());
+   });
+      DB::table('users')->insert(
+        [
+            'username' => 'somto121',
+            'name' => 'Somto Achu',
+            'email' => 'somto121@gmail.com',
+            'password' => bcrypt('password'),
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
+        ]);
     }
 }

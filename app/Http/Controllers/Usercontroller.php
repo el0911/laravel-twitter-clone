@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
-class Usercontroller extends Controller
+class UserController extends Controller
 {
 
   public function follows(Request $request)
