@@ -1,5 +1,5 @@
 <?php
-use App\Tweet;
+use App\tweet;
 use Illuminate\Database\Seeder;
 
 class TweetsTableSeeder extends Seeder
@@ -11,8 +11,8 @@ class TweetsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Tweet::class, 1)->create([
-            'user_id' => 2
+        factory(Tweet::class, 100)->create([
+            'user_id' => 1
             ]);
     }
 }
