@@ -19,9 +19,8 @@ class ProfileController extends Controller
       $is_edit_profile = false;
       $is_following = false;
       if (Auth::check()) {
-          $is_edit_profile = (Auth::id() == $user->id);
-          $me = Auth::user();
-          $following_count = $is_edit_profile ? $me->following()->count() : 0;
+          $is_edit_profile = Auth::id() == $user->id;
+          $me = Auth::user();          
           $is_following = !$is_edit_profile && $me->isFollowing($user);
       }
       return view('profile', [
@@ -36,13 +35,18 @@ class ProfileController extends Controller
 
   public function following($username)
   {
-      $me = User::where('username', $username)->firstOrFail();
-      $followers_count = $me->followers()->count();
-      $following_count = $me->following()->count();
-      $tweets_count =  $me->tweets()->count();
-      $list = $me->following()->orderBy('username')->get();
+      $user = User::where('username', $username)->firstOrFail();
+      $followers_count = $user->followers()->count();
+      $following_count = $user->following()->count();
+      $tweets_count =  $user->tweets()->count();
+      $list = $user->following()->orderBy('username')->get();
       $is_edit_profile = true;
       $is_following = false;
+      if (Auth::check()) {
+          $is_edit_profile = (Auth::id() == $user->id);
+          $me = Auth::user();          
+          $is_following = !$is_edit_profile && $me->isFollowing($user);
+      }
       return view('following', [
           'user' => $me,
           'tweets_count' => $tweets_count,
@@ -78,7 +82,7 @@ class ProfileController extends Controller
   {
       $user = User::where('username', $username)->firstOrFail();
       $followers_count =  $user->followers()->count();
-      $following_count = $user->following()->count();
+      $following_count =  $user->following()->count();
       $tweets_count =  $user->tweets()->count();
       $list = array();
       foreach($user->followers()->get() as $key => $follower)
@@ -89,8 +93,7 @@ class ProfileController extends Controller
       $is_following = false;
       if (Auth::check()) {
           $is_edit_profile = (Auth::id() == $user->id);
-          $me = Auth::user();
-          $following_count = $is_edit_profile ? $me->following()->count() : 0;
+          $me = Auth::user();          
           $is_following = !$is_edit_profile && $me->isFollowing($user);
       }
       return view('followers', [
@@ -115,15 +118,8 @@ class ProfileController extends Controller
       {
           $list[] = $follower->users()->get()->first();
       }
-
-      $is_edit_profile = false;
+      $is_edit_profile = true;
       $is_following = false;
-      if (Auth::check()) {
-          $is_edit_profile = (Auth::id() == $user->id);
-          $me = Auth::user();
-          $following_count = $is_edit_profile ? $me->following()->count() : 0;
-          $is_following = !$is_edit_profile && $me->isFollowing($user);
-      }
       return view('followers', [
           'user' => $user,
           'tweets_count' => $tweets_count,
