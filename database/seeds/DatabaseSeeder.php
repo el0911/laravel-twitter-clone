@@ -13,5 +13,7 @@ class DatabaseSeeder extends Seeder
    {
    		//no need for the tweet seeder. the tweets are generated from the UsersTableSeeder.
    	   $this->call(UsersTableSeeder::class);
+       $this->call(FollowerSeeder::class);
+       $this->call(TweetsTableSeeder::class);
    }
 }

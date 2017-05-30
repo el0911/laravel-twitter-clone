@@ -11,31 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/', function () {
+    	return view('welcome');
+    });
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/timeline', 'ShowTimeline@show');
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/{username}','profilecontroller@show');
-
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/following', 'ProfileController@following')->name('following');
+    Route::get('/following', 'ProfileController@following_auth')->name('user-following');
+    Route::get('/followers', 'ProfileController@followers_auth')->name('user-followers');
     Route::post('/follows', 'UserController@follows');
     Route::post('/unfollows', 'UserController@unfollows');
 });
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/timeline', 'ShowTimeline@show');
 
 Route::get('/{username}', 'ProfileController@show')->name('profile');
 Route::get('/{username}/followers', 'ProfileController@followers')->name('followers');
